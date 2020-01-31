@@ -45,7 +45,7 @@ shinyServer(function(input, output) {
         
     })
     
-    output$gdpchange <- renderText(percentchange(), )
+    output$gdpchange <- renderText(paste("%",round(percentchange(),2)), )
         
     
     
