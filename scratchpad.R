@@ -21,6 +21,7 @@ plot(lifeExp ~ gdpPercap, gap_with_colors,
      cex = sqrt(gap_with_colors$pop[keepers]/pi)/1500,
      bg = gap_with_colors$cc[keepers])
 
+
 h_countries <- c("Egypt", "Haiti", "Romania", "Thailand", "Venezuela")
 h_dat <- droplevels(subset(gapminder, country %in% h_countries))
 h_dat$country <- with(h_dat, reorder(country, lifeExp, max))
@@ -28,7 +29,6 @@ ggplot(h_dat, aes(x = year, y = lifeExp)) +
         geom_line(aes(color = country)) +
         scale_colour_manual(values = country_colors) +
         guides(color = guide_legend(reverse = TRUE))
-
 ggplot(subset(gapminder, continent != "Oceania"),
        aes(x = year, y = lifeExp, group = country, color = country)) +
         geom_line(lwd = 1, show.legend = FALSE) + facet_wrap(~ continent) +
@@ -46,3 +46,7 @@ ggplot(gap_bit, aes(x = gdpPercap, y = lifeExp, size = pop)) +
         theme_bw() + theme(strip.text = element_text(size = rel(1.1)))
 
 any(is.na(gapminder))
+
+gapcountry$pcgdpchange <- (gapcountry$gdpPercap[gapcountry$year == 2007] 
+        - gapcountry$gdpPercap[gapcountry$year == 1952])/ 
+        gapcountry$gdpPercap[gapcountry$year == 1952] * 100
