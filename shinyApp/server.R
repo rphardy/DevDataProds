@@ -15,7 +15,8 @@ shinyServer(function(input, output) {
             ggplot(gap_bit, aes(x = gdpPercap, y = lifeExp, size = pop)) +
             scale_x_log10(limits = c(150, 115000)) + ylim(c(16, 96)) +
             geom_point(pch = 21, color = 'grey20', show.legend = FALSE) +
-            scale_size_area(max_size = 40) +
+            scale_size_area(max_size = 40) + ylab("Life expectancy (years)") +
+            xlab("GDP per capita (US$, inflation-adjusted)") +
             facet_wrap(~ continent) + coord_fixed(ratio = 1/43) +
             aes(fill = country) + scale_fill_manual(values = country_colors) +
             theme_bw() + theme(strip.text = element_text(size = rel(1.1)))
@@ -30,13 +31,27 @@ shinyServer(function(input, output) {
         
         gdp <- ggplot(gap_country, aes(x = year, y = gdpPercap)) +
             geom_point(pch = 21, color = 'grey0', show.legend = FALSE) +
-            geom_line(color = 'grey0') +
-            facet_wrap(~ country) + coord_fixed(ratio = 1/43) +
-            aes(fill = country) + scale_fill_manual(values = country_colors) +
-            theme_bw() + theme(strip.text = element_text(size = rel(1.1)))
+            geom_line(color = 'grey0') + theme_bw() +
+            facet_wrap(~ country) + ylab("GDP per capita (US$, inflation-adjusted)")
+            aes(fill = country)
         gdp
+        
     })
-    
+    output$country2 <- renderPlot({
+        # show country lifeexp track over years between 1952-2007: 5 year interval
+        x <- gapminder$lifeExp
+        country <- input$country
+        
+        gap_country <- subset(gapminder, country == input$country)
+        gap_country <- gap_country[with(gap_country, order(continent, year, -1 * pop)), ]
+        
+        lifeexp <- ggplot(gap_country, aes(x = year, y = lifeExp)) +
+            geom_point(pch = 21, color = 'grey0', show.legend = FALSE) +
+            geom_line(color = 'grey0') + theme_bw() +
+            facet_wrap(~ country) + ylab("Life expectancy (years)") +
+            aes(fill = country)
+        lifeexp
+    })
     percentchange <- reactive({
         countryInput <- input$country
         (gapminder$gdpPercap[gapminder$country == as.character(countryInput) & gapminder$year == 2007] 
@@ -44,8 +59,14 @@ shinyServer(function(input, output) {
         gapminder$gdpPercap[gapminder$country == as.character(countryInput) & gapminder$year == 1952] * 100
         
     })
+    lifeexpchange <- reactive({
+        countryinput <- input$country
+        (gapminder$lifeExp[gapminder$country == as.character(countryinput) & gapminder$year == 2007]
+        -gapminder$lifeExp[gapminder$country == as.character(countryinput) & gapminder$year == 1952])
+    })
     
     output$gdpchange <- renderText(paste("%",round(percentchange(),2)), )
+    output$lifeexpchange <- renderText(paste(round(lifeexpchange(),0)," years"))
         
     
     

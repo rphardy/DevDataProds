@@ -50,3 +50,18 @@ any(is.na(gapminder))
 gapcountry$pcgdpchange <- (gapcountry$gdpPercap[gapcountry$year == 2007] 
         - gapcountry$gdpPercap[gapcountry$year == 1952])/ 
         gapcountry$gdpPercap[gapcountry$year == 1952] * 100
+
+# show country lifeexp track over years between 1952-2007: 5 year interval
+x <- gapminder$lifeExp
+country <- input$country
+
+gap_country <- subset(gapminder, country == input$country)
+gap_country <- gap_country[with(gap_country, order(continent, year, -1 * pop)), ]
+
+lifeexp <- ggplot(gap_country, aes(x = year, y = lifeExp)) +
+        geom_point(pch = 21, color = 'grey0', show.legend = FALSE) +
+        geom_line(color = 'grey0') + theme_bw() +
+        facet_wrap(~ country) +
+        aes(fill = country)
+lifeexp
+
