@@ -8,6 +8,7 @@ Supporting information:
 - Dataset access in R: 
   - data(gapminder)
   - ?gapminder
+  
 - Inspiration: 
   - https://www.youtube.com/watch?v=hVimVzgtD6w 
   - https://www.gapminder.org/
