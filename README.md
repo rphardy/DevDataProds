@@ -5,5 +5,8 @@ See deliverables:
 - Project pitch: http://rpubs.com/rphardy/app_pitchf
 
 Supporting information:
-- Dataset access: In R: data(gapminder), exploratory plot examples: ?gapminder
+- Dataset access: 
+  In R: 
+  data(gapminder)
+  ?gapminder
 - Inspiration: https://www.youtube.com/watch?v=hVimVzgtD6w, https://www.gapminder.org/
