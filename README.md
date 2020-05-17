@@ -6,7 +6,7 @@ See deliverables:
 
 Supporting information:
 - Dataset access: 
-  In R: 
-  data(gapminder)
-  ?gapminder
+  - In R: 
+  - data(gapminder)
+  - ?gapminder
 - Inspiration: https://www.youtube.com/watch?v=hVimVzgtD6w, https://www.gapminder.org/
