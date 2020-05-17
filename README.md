@@ -1,5 +1,4 @@
-# Johns Hopkins Data Science Course 9: Developing Data Products
-Course 9: Coursera - Johns Hopkins University Specialisation - developing data products
+# Johns Hopkins Data Science Specialisation - Course 9 - Developing Data Products
 
 See deliverables:
 - Final project shiny.io:  https://rphardy.shinyapps.io/shinyapp/
